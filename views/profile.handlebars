@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-auto">
+    <h2>'Sup, {{name}}.</h2>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-6">
+    <h3>bruh...</h3>
+
+    <form class="form new-blog-form">
+      <div class="form-group">
+        <label for="blog-name">Blog post title:</label>
+        <input class="form-input" type="text" id="blog-name" name="blog-name" />
+      </div>
+      <div class="form-group">
+        <label for="blog-desc">Blog Post:</label>
+        {{!-- TODO: possible change "blog-desc" to "blog-post" --}}
+        <textarea class="form-input" id="blog-desc" name="blog-desc"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">POST</button>
+      </div>
+    </form>
+  </div>
+
+  {{#if blogs.length}}
+  <div class="col-md-6 project-list">
+    <h3>My Tech Bruhs...</h3>
+
+    {{#each blogs as |blog|}}
+    <div class="row mb-2">
+      <div class="col-md-8">
+        <h4><a href="/blog/{{blog.id}}">{{blog.name}}</a></h4>
+      </div>
+      <div class="col-md-4">
+        {{!-- TODO: possibly add "Are you sure?" type of option for DELETE using humorous gen z slang --}}
+        <button class="btn btn-sm btn-danger" data-id="{{blog.id}}">DELETE</button>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+</div>
+
+<script src="./js/profile.js"></script>
