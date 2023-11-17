@@ -17,6 +17,7 @@
         <a href="/">Tech Bruh</a>
       </h1>
       <nav>
+        <a href="/">Home</a>
         <!-- Conditionally render login or logout links -->
         {{#if logged_in}}
         <a href="/profile">profile</a> |
@@ -29,18 +30,19 @@
     <main class="container container-fluid mt-5">
       <!-- Render the sub layout -->
       {{{ body }}}
-  <h1 class="name"></h1>
+      {{#if logged_in}}
+      <aside>
+        <div>
+          <a class="btn btn-primary" href="/blog">POST</a>
+        </div>
+      </aside>
+      <!-- Render script for logged in users only -->
+      <script src="/js/logout.js"></script>
+      <script src="/js/fetch.js"></script>
+      {{/if}}
     </main>
     <footer>
-      
     </footer>
   </div>
-
-  <!-- Render script for logged in users only -->
-  {{#if logged_in}}
-  <script src="/js/logout.js"></script>
-  {{/if}}
-  <script src="/js/fetch.js"></script>
 </body>
-
 </html>
