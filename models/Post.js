@@ -7,7 +7,6 @@ Post.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
@@ -26,13 +25,12 @@ Post.init(
     },
     date_created: {
       type: DataTypes.DATE,
-      allowNull: false,
       defaultValue: DataTypes.NOW,
     },
   },
   {
     sequelize,
-    timestamps: false,
+    timestamps: true,
     underscored: true,
     modelName: 'post',
   }
