@@ -30,24 +30,36 @@ router.get('/', async (req, res) => {
 
 // Dashboard Route
 
+// Login Route
+
+// SignUp Route
 
 // Post Route
-router.get('/post/:id', async (req, res) => {
+router.get('/post/:id', async (req, res, next) => {
   try {
-    const blogData = await Blog.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ['name'],
-        },
-      ],
+    const post = await Post.findByPk(req.params.id, {
+      include: [{ model: User }]
     });
-
-    const blog = blogData.get({ plain: true });
-
-    res.render('blog', {
-      ...blog,
-      logged_in: req.session.logged_in
+    let postData = [];
+    if (post === undefined || post === null || post.length === 0) {
+      postData = [];
+    } else {
+      postData = post.get({ plain: true });
+    }
+    const comment = await Comment.findAll({
+      include: [{ model: User }],
+      where:{post_id:req.params.id}
+    });
+    let commentData = [];
+    if (comment === undefined || comment === null || comment.length === 0) {
+      commentData = [];
+    } else {
+      commentData = comment.map((comment) => comment.get({ plain: true }));
+    }
+    res.render('post', {
+      postData,
+      commentData,
+      loggedIn: req.session.logged_in
     });
   } catch (err) {
     res.status(500).json(err);
