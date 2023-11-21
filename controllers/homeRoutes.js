@@ -28,11 +28,20 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Dashboard Route
-
-// Login Route
+// Navbar Route
 
 // SignUp Route
+
+
+// Login Route
+router.get('/login', (req, res) => {
+  // If the user is already logged in, redirect the request to another route
+  if (req.session.logged_in) {
+    res.redirect('/navbar');
+    return;
+  }
+  res.render('login');
+});
 
 // Post Route
 router.get('/post/:id', async (req, res, next) => {
@@ -86,14 +95,5 @@ router.get('/profile', withAuth, async (req, res) => {
   }
 });
 
-router.get('/login', (req, res) => {
-  // If the user is already logged in, redirect the request to another route
-  if (req.session.logged_in) {
-    res.redirect('/blog');
-    return;
-  }
-
-  res.render('login');
-});
 
 module.exports = router;
