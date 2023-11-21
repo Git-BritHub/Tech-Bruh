@@ -23,7 +23,7 @@ Comment.init(
             model: 'post',
             key: 'id',
           },
-        comment_post: {
+        comment: {
             type: DataTypes.TEXT
         }
         },
