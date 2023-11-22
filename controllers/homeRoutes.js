@@ -24,7 +24,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Navbar Route
+// Logged In Navbar Route
+// Use withAuth middleware to prevent unauthorized access
 router.get('/navbar', withAuth, async (req, res) => {
   try {
     const post = await Post.findAll({
@@ -98,20 +99,23 @@ router.get('/post/:id', async (req, res) => {
   }
 });
 
-// Use withAuth middleware to prevent access to route
-router.get('/profile', withAuth, async (req, res) => {
+// Update Post Route 
+// Use withAuth middleware to prevent unauthorized access
+router.get('/post-update/:id', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ['password'] },
-      include: [{ model: Blog }],
+    const post = await Post.findByPk(req.session.user_id, {
+      include: [{ model: Comment }, { model: User }],
     });
-
-    const user = userData.get({ plain: true });
-
-    res.render('profile', {
-      ...user,
-      logged_in: true
+    let postData = [];
+    if (post === undefined || post === null || post.length === 0) {
+      postData = [];
+    } else {
+      postData = post.get({ plain: true });
+    }
+    res.render('updatePost', {
+      postData,
+      loggedIn: req.session.logged_in
     });
   } catch (err) {
     res.status(500).json(err);
