@@ -122,5 +122,12 @@ router.get('/post-update/:id', withAuth, async (req, res) => {
   }
 });
 
+// New Post Route
+// Use withAuth middleware to prevent unauthorized access
+router.get('/post-new', withAuth, async (req, res, next) => {
+  res.render('newPost', {
+    loggedIn: req.session.logged_in
+  });
+});
 
 module.exports = router;
